@@ -1,0 +1,54 @@
+---
+title: "Does FDI Drive Growth?"
+subtitle: "Evidence from the World Development Indicators"
+format: revealjs
+author: Lucia Hernandez
+---
+
+## Overview
+
+## Data
+- The data used in this analysis is from the World Bank Group's World Development Indicators (WDI) Database. It is a comprehensive collection of international development indicators. 
+
+- The UN Trade and Development (UNCTAD) World Investment Report was also used to identify the countries that received the most FDI in 2025.
+
+# Analysis
+```{r}
+library(tidyverse)
+library(knitr)
+df0 <- read_csv('WDICSV.csv')
+series <- read_csv('WDISeries.csv')
+countries <- read_csv('WDICountry.csv')
+
+
+series <- series %>%
+  filter(`Series Code` == 'BX.KLT.DINV.WD.GD.ZS' | 
+           `Series Code` == 'NY.GDP.PCAP.KD.ZG' )
+
+df <- df0 %>%
+  pivot_longer(
+    cols = 5:70,
+    names_to = 'year',
+    values_to = 'score'
+  ) %>%
+  filter(`Indicator Code` == 'BX.KLT.DINV.WD.GD.ZS' |
+          `Indicator Code` == 'NY.GDP.PCAP.KD.ZG')%>%
+  pivot_wider(
+    values_from = 'score',
+    names_from = `Indicator Code`
+  )%>%
+  rename(
+    fdi = 'BX.KLT.DINV.WD.GD.ZS',
+    gdp = 'NY.GDP.PCAP.KD.ZG'
+  )%>%
+  mutate( year = as.integer(year))%>%
+  group_by(`Country Name`, `Country Code`, year) %>%
+  summarize(
+    fdi = first(na.omit(fdi)),
+    gdp = first(na.omit(gdp)), 
+    .groups = 'drop'
+  )
+
+```
+
+
