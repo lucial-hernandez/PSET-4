@@ -52,3 +52,68 @@ df <- df0 %>%
 ```
 
 
+##
+```{r}
+filter(df, 
+  `Country Name` == 'East Asia & Pacific (excluding high income)'| 
+  `Country Name` == 'Sub-Saharan Africa (excluding high income)'|
+  `Country Name` == 'Latin America & Caribbean (excluding high income)' | 
+  `Country Name` == 'Middle East, North Africa, Afghanistan & Pakistan (excluding high income)') %>%
+    ggplot(aes(fdi,gdp))+
+    geom_point(color = 'darkorchid4')+
+    geom_smooth(method=lm, color = 'darkorchid4')+
+    theme_minimal()+
+    theme(plot.title = element_text(size = 12, face = 'bold'))+
+    facet_wrap(~`Country Name`, scales = 'free')+
+    labs(
+    title = 'Figure 1: FDI and GDP per capita in each region',
+    subtitle = "1960 - 2025",
+      x = "	
+Foreign direct investment, net inflows (% of GDP)",
+      y = 'GDP per capita (annual % growth)'
+)
+
+
+```
+
+##
+```{r}
+  
+filter(df, `Country Name` == 'Singapore'| `Country Name` == 'Egypt, Arab Rep.'|
+         `Country Name` == 'Brazil'|`Country Name` == 'United Arab Emirates')%>%
+    ggplot(aes(fdi,gdp))+
+    geom_point(color = 'darkorchid4')+
+    geom_smooth(method=lm, color = 'darkorchid4')+
+    theme_minimal()+
+    theme(plot.title = element_text(size = 12, face = 'bold'))+
+    facet_wrap(~`Country Name`, scales = 'free')+
+    labs(
+      title = 'Figure 2: FDI and GDP per capita in the developing economies that received the most FDI per region in 2025',
+      subtitle = "1960 - 2025",
+      x = "	
+Foreign direct investment, net inflows (% of GDP)",
+      y = 'GDP per capita (annual % growth)'
+    )
+
+
+```
+## 
+```{r}
+filter(df, 
+`Country Name` == 'Least developed countries: UN classification'| 
+`Country Name` == 'Low income'|
+`Country Name` == 'Lower middle income')%>%
+    ggplot(aes(fdi,gdp))+
+    geom_point(color = 'darkorchid4')+
+    geom_smooth(method=lm, color = 'darkorchid4')+
+    theme_minimal()+
+    theme(plot.title = element_text(size = 12, face = 'bold'))+
+    facet_wrap(~`Country Name`, scales = 'free')+
+    labs(
+      title = 'Figure 3: FDI and GDP per capita least developed, low income, and middle income countries',
+      subtitle = "1960 - 2025",
+      x = "	
+Foreign direct investment, net inflows (% of GDP)",
+      y = 'GDP per capita (annual % growth)'
+    )
+```
